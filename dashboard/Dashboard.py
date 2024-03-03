@@ -58,11 +58,11 @@ for col in datetime_columns:
     days_df[col] = pd.to_datetime(days_df[col])
     hours_df[col] = pd.to_datetime(hours_df[col])
 
+min_date_hour = hours_df["date"].min()
+max_date_hour = hours_df["date"].max()
 min_date_days = days_df["date"].min()
 max_date_days = days_df["date"].max()
 
-min_date_hour = hours_df["date"].min()
-max_date_hour = hours_df["date"].max()
 
 with st.sidebar:
 #image
