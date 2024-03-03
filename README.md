@@ -13,5 +13,11 @@ Link of Website Streamlit
 [Project Data Analysis](https://app-bike-sharing-8vjnvckyxypwpwnbmdbvui.streamlit.app/)
 
 
+## installation
+1. Clone this repository to your local computer
+   ```bash
+   clone https://github.com/SultanFahdMBY/bike-sharing-Project.git
+   ```
+2. 
    
 
