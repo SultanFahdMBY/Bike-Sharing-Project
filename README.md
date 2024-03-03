@@ -26,7 +26,7 @@ Link of Website Streamlit
 ## Utilization
 1. Go to your dictionary local
    ```bash
-   cd bike-sharing/dashboard/
+   cd bike-sharing-project/dashboard/
    streamlit run dashboard.py
    ```
 2. Or you can visit this website streamlit project
