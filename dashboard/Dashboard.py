@@ -1,29 +1,25 @@
+import seaborn as sns
 import pandas as pd
 import matplotlib.pyplot as plt
-import seaborn as sns
 import streamlit as st
+
 
 sns.set_style('whitegrid')
 
-def get_total_count_by_hour_df(hour_df):
-  hour_count_df =  hour_df.groupby(by="hour").agg({"count": ["sum"]})
-  return hour_count_df
 
-def count_by_day_df(day_df):
-    day_df_count_2011 = day_df.query(str('date >= "2011-01-01" and date < "2012-12-31"'))
+def sum_order (hour_df):
+    sum_order_items_df = hour_df.groupby("hour")["count"].sum().sort_values(ascending=False).reset_index()
+    return sum_order_items_df
+
+def ma_season (day_df): 
+    season_df = day_df.groupby(by="season")["count"].sum().reset_index() 
+    return season_df
+
+def count_by_day(day_df):
+    day_df_count_2011 = day_df.query(str('date < "2012-12-31" and date >= "2011-01-01"'))
     return day_df_count_2011
 
-def total_registered_df(day_df):
-   reg_df =  day_df.groupby(by="date").agg({
-      "registered": "sum"
-    })
-   reg_df = reg_df.reset_index()
-   reg_df.rename(columns={
-        "registered": "register_sum"
-    }, inplace=True)
-   return reg_df
-
-def total_casual_df(day_df):
+def total_casual(day_df):
    cas_df =  day_df.groupby(by="date").agg({
       "casual": ["sum"]
     })
@@ -33,13 +29,20 @@ def total_casual_df(day_df):
     }, inplace=True)
    return cas_df
 
-def sum_order (hour_df):
-    sum_order_items_df = hour_df.groupby("hour")["count"].sum().sort_values(ascending=False).reset_index()
-    return sum_order_items_df
+def get_total_by_hour(hour_df):
+  hour_count_df =  hour_df.groupby(by="hour").agg({"count": ["sum"]})
+  return hour_count_df
 
-def macem_season (day_df): 
-    season_df = day_df.groupby(by="season")["count"].sum().reset_index() 
-    return season_df
+def total_registered(day_df):
+   reg_df =  day_df.groupby(by="date").agg({
+      "registered": "sum"
+    })
+   reg_df = reg_df.reset_index()
+   reg_df.rename(columns={
+        "registered": "register_sum"
+    }, inplace=True)
+   return reg_df
+
 
 days_df = pd.read_csv("day_df.csv")
 hours_df = pd.read_csv("hour_df.csv")
@@ -51,9 +54,9 @@ days_df.reset_index(inplace=True)
 hours_df.sort_values(by="date", inplace=True)
 hours_df.reset_index(inplace=True)
 
-for column in datetime_columns:
-    days_df[column] = pd.to_datetime(days_df[column])
-    hours_df[column] = pd.to_datetime(hours_df[column])
+for col in datetime_columns:
+    days_df[col] = pd.to_datetime(days_df[col])
+    hours_df[col] = pd.to_datetime(hours_df[col])
 
 min_date_days = days_df["date"].min()
 max_date_days = days_df["date"].max()
@@ -72,18 +75,18 @@ with st.sidebar:
         max_value=max_date_days,
         value=[min_date_days, max_date_days])
     
-main_df_days = days_df[(days_df["date"] >= str(start_date)) & 
-                       (days_df["date"] <= str(end_date))]
+main_df_days = days_df[(days_df["date"] <= str(end_date)) & 
+                       (days_df["date"] >= str(start_date))]
 
-main_df_hour = hours_df[(hours_df["date"] >= str(start_date)) & 
-                        (hours_df["date"] <= str(end_date))]
+main_df_hour = hours_df[(hours_df["date"] <= str(end_date)) & 
+                        (hours_df["date"] >= str(start_date))]
 
-hour_count_df = get_total_count_by_hour_df(main_df_hour)
-day_df_count_2011 = count_by_day_df(main_df_days)
-reg_df = total_registered_df(main_df_days)
-cas_df = total_casual_df(main_df_days)
-sum_order_items_df = sum_order(main_df_hour)
-season_df = macem_season(main_df_hour)
+hour_count = get_total_by_hour(main_df_hour)
+day_df_count_2011 = count_by_day(main_df_days)
+reg = total_registered(main_df_days)
+cas = total_casual(main_df_days)
+sum_order_items = sum_order(main_df_hour)
+season = ma_season(main_df_hour)
   
 
 ##Visualization
@@ -103,12 +106,12 @@ with col1:
     st.metric("Total Bike Sharing", value=total_orders)
 
 with col2:
-    total_sum = cas_df.casual_sum.sum()
+    total_sum = cas.casual_sum.sum()
     st.metric("Total Casual Users", value=total_sum)
     
 
 with col3:
-    total_sum = reg_df.register_sum.sum()
+    total_sum = reg.register_sum.sum()
     st.metric("Total Registered Users", value=total_sum)
 
 
@@ -152,7 +155,7 @@ st.pyplot(fig)
 
 st.subheader("Comparison of User Type Percentages")
 labels = 'Casual Users', 'Registered Users'
-sizes = [18.8, 81.2]
+sizes = [18.83, 81.17]
 explode = (0, 0.1)
 
 fig1, ax1 = plt.subplots()
@@ -163,7 +166,7 @@ st.pyplot(fig1)
 
 st.subheader("Performance of Rentals been in Recent Years")
 
-fig2, ax = plt.subplots(figsize=(16, 8),sharey=True)
+fig2, ax = plt.subplots(figsize=(15, 8),sharey=True)
 ax.plot(
     days_df["date"],
     days_df["count"],
@@ -171,11 +174,11 @@ ax.plot(
     linewidth=2,
     color="#2a9df4"
 )
+ax.set_xlabel("Date",  fontsize=20)
+ax.set_ylabel("User Count", fontsize=20)
 ax.tick_params(axis='y', labelsize=25)
 ax.tick_params(axis='x', labelsize=15)
 ax.set_title("Number of Users Per Month",fontsize=30)
-ax.set_xlabel("Date",  fontsize=20)
-ax.set_ylabel("User Count", fontsize=20)
 st.pyplot(fig2)
 
 st.subheader("Conclusion")
