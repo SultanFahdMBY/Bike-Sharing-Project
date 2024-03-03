@@ -10,4 +10,13 @@ Preview Dashboard Streamlit<br>
 The purpose of this project is to analyze data from the Bike Sharing Dataset. The output of this project will provide us with insights and knowledge.
 
 Link of Website Streamlit
-(https://app-bike-sharing-8vjnvckyxypwpwnbmdbvui.streamlit.app/)
+[Project Data Analysis](https://app-bike-sharing-8vjnvckyxypwpwnbmdbvui.streamlit.app/)
+
+
+## installation
+1. Clone this repository to your local computer
+   '''
+   git clone https://github.com/SultanFahdMBY/bike-sharing-Project.git
+   '''
+   
+
