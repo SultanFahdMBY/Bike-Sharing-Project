@@ -41,8 +41,8 @@ def macem_season (day_df):
     season_df = day_df.groupby(by="season")["count"].sum().reset_index() 
     return season_df
 
-days_df = pd.read_csv("D:\Submission\dashboard\day_df.csv")
-hours_df = pd.read_csv("D:\Submission\dashboard\hour_df.csv")
+days_df = pd.read_csv("dashboard\day_df.csv")
+hours_df = pd.read_csv("dashboard\hour_df.csv")
 
 datetime_columns = ["date"]
 days_df.sort_values(by="date", inplace=True)
