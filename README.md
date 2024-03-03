@@ -1,5 +1,4 @@
-# Submission Dicoding 
-## Belajar Analisis Data dengan Python
+# Submission Dicoding (Belajar Analisis Data dengan Python)
 ### "Bangkit Academy Cohort 2024"
 
 Preview Dashboard Streamlit<br>
@@ -8,3 +7,7 @@ Preview Dashboard Streamlit<br>
 
 
 ## Description
+The purpose of this project is to analyze data from the Bike Sharing Dataset. The output of this project will provide us with insights and knowledge.
+
+Link of Website Streamlit
+(Project Data Analysis)[https://app-bike-sharing-8vjnvckyxypwpwnbmdbvui.streamlit.app/]
