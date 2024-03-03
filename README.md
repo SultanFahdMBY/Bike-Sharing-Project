@@ -14,10 +14,11 @@ Link of Website Streamlit
 
 
 ## installation
-1. Clone this repository to your local computer<br>
+1. Clone this repository to your local computer
 
    '''
    git clone https://github.com/SultanFahdMBY/bike-sharing-Project.git
    '''
+2. 
    
 
