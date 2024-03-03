@@ -63,7 +63,7 @@ max_date_hour = hours_df["date"].max()
 
 with st.sidebar:
 #image
-    st.image("bikesharing.jpg")
+    st.image("Bikesharing.jpg")
     
 # imput start_date & end_date dari date_input
     start_date, end_date = st.date_input(
